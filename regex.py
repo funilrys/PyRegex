@@ -57,10 +57,10 @@ class Regex(object):
 
         # In case we have to use the implementation of ${BASH_REMATCH} we use
         #+ re.findall otherwise, we use re.search
-        if self.rematch == False:
-            pre_result = to_match.search(self.data)
-        else:
+        if self.rematch:
             pre_result = to_match.findall(self.data)
+        else:
+            pre_result = to_match.search(self.data)
 
 
         if self.return_data and result is not None:
