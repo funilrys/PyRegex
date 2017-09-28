@@ -31,28 +31,37 @@ class Regex(object):
     def __init__(self, data, regex, **args):
         super(Regex, self).__init__()
 
+        # We initiate the needed variable in order to be usage all over class
         self.data = data
         self.regex = regex
 
+        # We assign the default value of our optional arguments
         optional_arguments = {
             "return_data": True,
             "group": 0,
             "rematch": False
         }
 
+        # We initiate our optional_arguments in order to be usable all over the class
         for (arg, default) in optional_arguments.items():
             setattr(self, arg, args.get(arg, default))
 
     def match(self):
         """Used to get exploitable result of re.search"""
 
+        # We initate this variable which gonna contain the returned data
         result = []
+
+        # We compile the regex string
         to_match = compile(self.regex)
 
+        # In case we have to use the implementation of ${BASH_REMATCH} we use
+        #+ re.findall otherwise, we use re.search
         if self.rematch == False:
             pre_result = to_match.search(self.data)
         else:
             pre_result = to_match.findall(self.data)
+
 
         if self.return_data and result is not None:
             if self.rematch:
