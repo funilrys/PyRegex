@@ -45,5 +45,4 @@ class Regex(object):
             return result.group(self.group).strip()
         elif self.return_data == False and result is not None:
             return True
-        else:
-            return False
+        return False
