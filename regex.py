@@ -1,30 +1,35 @@
 #!/usr/bin/env python
 
-#    python-regex - A simple implementation ot the python.re package
-#    Copyright (C) 2017  Nissar Chababy <contact at funilrys dot com>
+# python-regex - A simple implementation ot the python.re package
+# Copyright (c) 2017 Funilrys - Nissar Chababy <contact at funilrys dot com>
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+# Original Version: https://github.com/funilrys/python-regex
 
 from re import compile, search
 
 
 class Regex(object):
-    """A simple implementation ot the python.re package"""
+
+    """A simple implementation ot the python.re package
+
+
+    :param data: A string, the data to regex check
+    :param regex: A string, the regex to match
+    :param return_data: A string, if true, return the matched string
+    :param group: A integer, the group to return
+    """
 
     def __init__(self, data, regex, return_data=True, group=0):
         super(Regex, self).__init__()
+        
         self.data = data
         self.regex = regex
         self.return_data = return_data
