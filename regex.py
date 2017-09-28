@@ -13,7 +13,7 @@
 #
 # Original Version: https://github.com/funilrys/python-regex
 
-from re import compile, search
+from re import compile, findall, search
 
 
 class Regex(object):
@@ -23,8 +23,9 @@ class Regex(object):
 
     :param data: A string, the data to regex check
     :param regex: A string, the regex to match
-    :param return_data: A string, if true, return the matched string
+    :param return_data: A boolean, if True, return the matched string
     :param group: A integer, the group to return
+    :param rematch: A boolean, if True, return the matched groups into a formated list. (implementation of Bash ${BASH_REMATCH})
     """
 
     def __init__(self, data, regex, **args):
@@ -35,7 +36,8 @@ class Regex(object):
 
         optional_arguments = {
             "return_data": True,
-            "group": 0
+            "group": 0,
+            "rematch": False
         }
 
         for (arg, default) in optional_arguments.items():
@@ -44,11 +46,28 @@ class Regex(object):
     def match(self):
         """Used to get exploitable result of re.search"""
 
+        result = []
         to_match = compile(self.regex)
-        result = to_match.search(self.data)
+
+        if self.rematch == False:
+            pre_result = to_match.search(self.data)
+        else:
+            pre_result = to_match.findall(self.data)
 
         if self.return_data and result is not None:
-            return result.group(self.group).strip()
+            if self.rematch:
+                for data in pre_result:
+                    if isinstance(data,tuple):
+                        result.extend(list(data))
+                    else:
+                        result.append(data)
+
+                if self.group != 0:
+                    return result[self.group]
+            else:
+                result = pre_result.group(self.group).strip()
+
+            return result
         elif self.return_data == False and result is not None:
             return True
         return False
