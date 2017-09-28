@@ -27,13 +27,19 @@ class Regex(object):
     :param group: A integer, the group to return
     """
 
-    def __init__(self, data, regex, return_data=True, group=0):
+    def __init__(self, data, regex, **args):
         super(Regex, self).__init__()
 
         self.data = data
         self.regex = regex
-        self.return_data = return_data
-        self.group = group
+
+        optional_arguments = {
+            "return_data": True,
+            "group": 0
+        }
+
+        for (arg, default) in optional_arguments.items():
+            setattr(self, arg, args.get(arg, default))
 
     def match(self):
         """Used to get exploitable result of re.search"""
