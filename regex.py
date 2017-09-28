@@ -29,7 +29,7 @@ class Regex(object):
 
     def __init__(self, data, regex, return_data=True, group=0):
         super(Regex, self).__init__()
-        
+
         self.data = data
         self.regex = regex
         self.return_data = return_data
@@ -38,8 +38,8 @@ class Regex(object):
     def match(self):
         """Used to get exploitable result of re.search"""
 
-        toMatch = compile(self.regex)
-        result = toMatch.search(self.data)
+        to_match = compile(self.regex)
+        result = to_match.search(self.data)
 
         if self.return_data and result is not None:
             return result.group(self.group).strip()
