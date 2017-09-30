@@ -42,7 +42,8 @@ class Regex(object):
             "rematch": False
         }
 
-        # We initiate our optional_arguments in order to be usable all over the class
+        # We initiate our optional_arguments in order to be usable all over the
+        # class
         for (arg, default) in optional_arguments.items():
             setattr(self, arg, args.get(arg, default))
 
@@ -62,11 +63,10 @@ class Regex(object):
         else:
             pre_result = to_match.search(self.data)
 
-
-        if self.return_data and result is not None:
+        if self.return_data and pre_result is not None:
             if self.rematch:
                 for data in pre_result:
-                    if isinstance(data,tuple):
+                    if isinstance(data, tuple):
                         result.extend(list(data))
                     else:
                         result.append(data)
