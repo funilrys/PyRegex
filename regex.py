@@ -77,6 +77,6 @@ class Regex(object):
                 result = pre_result.group(self.group).strip()
 
             return result
-        elif self.return_data == False and result is not None:
+        elif self.return_data == False and pre_result is not None:
             return True
         return False
