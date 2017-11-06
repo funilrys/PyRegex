@@ -20,7 +20,7 @@ A simple implementation ot the python.re package.
 from re import compile as comp
 
 
-class Regex(object):
+class Regex(object):  # pylint: disable=too-few-public-methods
 
     """A simple implementation ot the python.re package
 
@@ -63,25 +63,26 @@ class Regex(object):
 
         # In case we have to use the implementation of ${BASH_REMATCH} we use
         # re.findall otherwise, we use re.search
-        if self.rematch:
+        if self.rematch:  # pylint: disable=no-member
             pre_result = to_match.findall(self.data)
         else:
             pre_result = to_match.search(self.data)
 
-        if self.return_data and pre_result is not None:
-            if self.rematch:
+        if self.return_data and pre_result is not None:  # pylint: disable=no-member
+            if self.rematch:  # pylint: disable=no-member
                 for data in pre_result:
                     if isinstance(data, tuple):
                         result.extend(list(data))
                     else:
                         result.append(data)
 
-                if self.group != 0:
-                    return result[self.group]
+                if self.group != 0:  # pylint: disable=no-member
+                    return result[self.group]  # pylint: disable=no-member
             else:
-                result = pre_result.group(self.group).strip()
+                result = pre_result.group(
+                    self.group).strip()  # pylint: disable=no-member
 
             return result
-        elif not self.return_data and pre_result is not None:
+        elif not self.return_data and pre_result is not None:  # pylint: disable=no-member
             return True
         return False
