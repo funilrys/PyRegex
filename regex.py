@@ -13,7 +13,11 @@
 #
 # Original Version: https://github.com/funilrys/python-regex
 
-from re import compile, findall, search
+"""
+A simple implementation ot the python.re package.
+"""
+
+from re import compile as comp
 
 
 class Regex(object):
@@ -25,13 +29,14 @@ class Regex(object):
     :param regex: A string, the regex to match
     :param return_data: A boolean, if True, return the matched string
     :param group: A integer, the group to return
-    :param rematch: A boolean, if True, return the matched groups into a formated list. (implementation of Bash ${BASH_REMATCH})
+    :param rematch: A boolean, if True, return the matched groups into a
+        formated list. (implementation of Bash ${BASH_REMATCH})
     """
 
     def __init__(self, data, regex, **args):
         super(Regex, self).__init__()
 
-        # We initiate the needed variable in order to be usage all over class
+        # We initiate the needed variable in order to be usable all over class
         self.data = data
         self.regex = regex
 
@@ -54,10 +59,10 @@ class Regex(object):
         result = []
 
         # We compile the regex string
-        to_match = compile(self.regex)
+        to_match = comp(self.regex)
 
         # In case we have to use the implementation of ${BASH_REMATCH} we use
-        #+ re.findall otherwise, we use re.search
+        # re.findall otherwise, we use re.search
         if self.rematch:
             pre_result = to_match.findall(self.data)
         else:
@@ -77,6 +82,6 @@ class Regex(object):
                 result = pre_result.group(self.group).strip()
 
             return result
-        elif self.return_data == False and pre_result is not None:
+        elif not self.return_data and pre_result is not None:
             return True
         return False
