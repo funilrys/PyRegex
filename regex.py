@@ -33,6 +33,7 @@ class Regex(object):  # pylint: disable=too-few-public-methods
     :param rematch: A boolean, if True, return the matched groups into a
         formated list. (implementation of Bash ${BASH_REMATCH})
     :param replace_with: A string, the value to replace the matched regex with.
+    :param occurences: A int, the number of occurence to replace.
     """
 
     def __init__(self, data, regex, **args):
@@ -47,7 +48,8 @@ class Regex(object):  # pylint: disable=too-few-public-methods
             "return_data": True,
             "group": 0,
             "rematch": False,
-            "replace_with": None
+            "replace_with": None,
+            "occurences": 0
         }
 
         # We initiate our optional_arguments in order to be usable all over the
@@ -97,5 +99,6 @@ class Regex(object):  # pylint: disable=too-few-public-methods
             return substrings(
                 self.regex,
                 self.replace_with,  # pylint: disable=no-member
-                self.data)
+                self.data,
+                self.occurences)  # pylint: disable=no-member
         return self.data
