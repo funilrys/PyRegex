@@ -18,6 +18,7 @@ A simple implementation ot the python.re package.
 """
 
 from re import compile as comp
+from re import sub as substrings
 
 
 class Regex(object):  # pylint: disable=too-few-public-methods
@@ -31,6 +32,7 @@ class Regex(object):  # pylint: disable=too-few-public-methods
     :param group: A integer, the group to return
     :param rematch: A boolean, if True, return the matched groups into a
         formated list. (implementation of Bash ${BASH_REMATCH})
+    :param replace_with: A string, the value to replace the matched regex with.
     """
 
     def __init__(self, data, regex, **args):
@@ -44,7 +46,8 @@ class Regex(object):  # pylint: disable=too-few-public-methods
         optional_arguments = {
             "return_data": True,
             "group": 0,
-            "rematch": False
+            "rematch": False,
+            "replace_with": None
         }
 
         # We initiate our optional_arguments in order to be usable all over the
@@ -86,3 +89,13 @@ class Regex(object):  # pylint: disable=too-few-public-methods
         elif not self.return_data and pre_result is not None:  # pylint: disable=no-member
             return True
         return False
+
+    def replace(self):
+        """Used to replace a matched string with another."""
+
+        if self.replace_with is not None:  # pylint: disable=no-member
+            return substrings(
+                self.regex,
+                self.replace_with,  # pylint: disable=no-member
+                self.data)
+        return self.data
