@@ -19,6 +19,7 @@ A simple implementation ot the python.re package.
 
 from re import compile as comp
 from re import sub as substrings
+from re import escape
 
 
 class Regex(object):  # pylint: disable=too-few-public-methods
@@ -45,17 +46,24 @@ class Regex(object):  # pylint: disable=too-few-public-methods
 
         # We assign the default value of our optional arguments
         optional_arguments = {
-            "return_data": True,
+            "escape": False,
             "group": 0,
+            "occurences": 0,
             "rematch": False,
             "replace_with": None,
-            "occurences": 0
+            "return_data": True
         }
 
         # We initiate our optional_arguments in order to be usable all over the
         # class
         for (arg, default) in optional_arguments.items():
             setattr(self, arg, args.get(arg, default))
+
+        # We initiate regex according to self.escape status.
+        if self.escape:  # pylint: disable=no-member
+            self.regex = escape(regex)
+        else:
+            self.regex = regex
 
     def match(self):
         """Used to get exploitable result of re.search"""
