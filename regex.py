@@ -24,17 +24,26 @@ from re import escape
 
 class Regex(object):  # pylint: disable=too-few-public-methods
 
-    """A simple implementation ot the python.re package
+    """
+    A simple implementation ot the python.re package
 
-
-    :param data: A string, the data to regex check
-    :param regex: A string, the regex to match
-    :param return_data: A boolean, if True, return the matched string
-    :param group: A integer, the group to return
-    :param rematch: A boolean, if True, return the matched groups into a
-        formated list. (implementation of Bash ${BASH_REMATCH})
-    :param replace_with: A string, the value to replace the matched regex with.
-    :param occurences: A int, the number of occurence to replace.
+    Arguments:
+        - data: str or list
+            The data or a list of data to check.
+        - regex: str or list
+            The regex or a list or regex.
+        - return_data: bool
+            - True: Return matched string
+            - False: Return False|True
+        - group: int
+            The group to return.
+        - rematch: bool
+            Implementation of Bash ${BASH_REMATCH}.
+            - True: Returned matched groups into a list format.
+        - replace_with: str
+            The value to replace the matched regex with.
+        - occurences: int
+            The number of occurence to replace.
     """
 
     def __init__(self, data, regex, **args):
@@ -66,7 +75,20 @@ class Regex(object):  # pylint: disable=too-few-public-methods
             self.regex = regex
 
     def match(self, regex=None, data_to_match=None):
-        """Used to get exploitable result of re.search"""
+        """
+        Used to get exploitable result of re.search
+
+        Arguments:
+            - data: str
+                The data or a list of data to check.
+            - regex: str
+                The regex or a list or regex.
+
+        Returns:
+            list or bool
+            - bool: if self.return_data is False
+            - list: otherwise
+        """
 
         # We initate this variable which gonna contain the returned data
         result = []
@@ -107,7 +129,9 @@ class Regex(object):  # pylint: disable=too-few-public-methods
         return False
 
     def loop_matching(self):
-        """This method can be used to perform a loop matching."""
+        """
+        This method can be used to perform a loop matching.
+        """
 
         results = []
 
@@ -122,7 +146,9 @@ class Regex(object):  # pylint: disable=too-few-public-methods
         return results
 
     def replace(self):
-        """Used to replace a matched string with another."""
+        """
+        Used to replace a matched string with another.
+        """
 
         if self.replace_with is not None:  # pylint: disable=no-member
             return substrings(
