@@ -135,9 +135,22 @@ class Regex(object):  # pylint: disable=too-few-public-methods
 
         results = []
 
-        if isinstance(self.data, str) and isinstance(self.regex, list):
-            for exp in self.regex:
-                results.extend(self.match(regex=exp))
+        if isinstance(self.data, str):
+            if isinstance(self.regex, list):
+                for exp in self.regex:
+                    matched = self.match(regex=exp)
+
+                    try:
+                        results.extend(matched)
+                    except TypeError:
+                        results.append(matched)
+
+                if not self.return_data:  # pylint: disable=no-member
+                    if True in results:
+                        return True
+                    return False
+            else:
+                return self.match()
 
         elif isinstance(self.data, list) and isinstance(self.regex, str):
             for string in self.data:
