@@ -65,21 +65,27 @@ class Regex(object):  # pylint: disable=too-few-public-methods
         else:
             self.regex = regex
 
-    def match(self):
+    def match(self, regex=None, data_to_match=None):
         """Used to get exploitable result of re.search"""
 
         # We initate this variable which gonna contain the returned data
         result = []
 
+        if not regex:
+            regex = self.regex
+
+        if not data_to_match:
+            data_to_match = self.data
+
         # We compile the regex string
-        to_match = comp(self.regex)
+        to_match = comp(regex)
 
         # In case we have to use the implementation of ${BASH_REMATCH} we use
         # re.findall otherwise, we use re.search
         if self.rematch:  # pylint: disable=no-member
-            pre_result = to_match.findall(self.data)
+            pre_result = to_match.findall(data_to_match)
         else:
-            pre_result = to_match.search(self.data)
+            pre_result = to_match.search(data_to_match)
 
         if self.return_data and pre_result is not None:  # pylint: disable=no-member
             if self.rematch:  # pylint: disable=no-member
@@ -99,6 +105,21 @@ class Regex(object):  # pylint: disable=too-few-public-methods
         elif not self.return_data and pre_result is not None:  # pylint: disable=no-member
             return True
         return False
+
+    def loop_matching(self):
+        """This method can be used to perform a loop matching."""
+
+        results = []
+
+        if isinstance(self.data, str) and isinstance(self.regex, list):
+            for exp in self.regex:
+                results.extend(self.match(regex=exp))
+
+        elif isinstance(self.data, list) and isinstance(self.regex, str):
+            for string in self.data:
+                results.extend(self.match(data_to_match=string))
+
+        return results
 
     def replace(self):
         """Used to replace a matched string with another."""
