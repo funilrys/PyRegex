@@ -1,29 +1,27 @@
-#!/usr/bin/env python
-
-# python-regex - A simple implementation ot the python.re package
-# Copyright (c) 2017 Funilrys - Nissar Chababy <contact at funilrys dot com>
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-#
-# Original Version: https://github.com/funilrys/python-regex
-
 """
-A simple implementation ot the python.re package.
-"""
+A simple implementation of the python.re package.
+
+Copyright (c) 2017 Funilrys - Nissar Chababy <contact at funilrys dot com>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Original Version: https://github.com/funilrys/PyRegex
+""""
 
 from re import compile as comp
 from re import sub as substrings
 from re import escape
 
+# pylint: disable=invalid-name
+
 
 class Regex(object):  # pylint: disable=too-few-public-methods
-
     """
     A simple implementation ot the python.re package
 
@@ -60,7 +58,7 @@ class Regex(object):  # pylint: disable=too-few-public-methods
             "occurences": 0,
             "rematch": False,
             "replace_with": None,
-            "return_data": True
+            "return_data": True,
         }
 
         # We initiate our optional_arguments in order to be usable all over the
@@ -119,44 +117,40 @@ class Regex(object):  # pylint: disable=too-few-public-methods
 
                 if self.group != 0:  # pylint: disable=no-member
                     return result[self.group]  # pylint: disable=no-member
+
             else:
                 result = pre_result.group(
-                    self.group).strip()  # pylint: disable=no-member
+                    self.group  # pylint: disable=no-member
+                ).strip()
 
             return result
+
         elif not self.return_data and pre_result is not None:  # pylint: disable=no-member
             return True
+
         return False
 
-    def loop_matching(self):
+    def not_matching_list(self):
         """
-        This method can be used to perform a loop matching.
+        This method return a list of string which don't match the
+        given regex.
         """
 
-        results = []
+        pre_result = comp(self.regex)
 
-        if isinstance(self.data, str):
-            if isinstance(self.regex, list):
-                for exp in self.regex:
-                    matched = self.match(regex=exp)
+        return list(
+            filter(lambda element: not pre_result.search(str(element)), self.data)
+        )
 
-                    try:
-                        results.extend(matched)
-                    except TypeError:
-                        results.append(matched)
+    def matching_list(self):
+        """
+        This method return a list of the string which match the given
+        regex.
+        """
 
-                if not self.return_data:  # pylint: disable=no-member
-                    if True in results:
-                        return True
-                    return False
-            else:
-                return self.match()
+        pre_result = comp(self.regex)
 
-        elif isinstance(self.data, list) and isinstance(self.regex, str):
-            for string in self.data:
-                results.extend(self.match(data_to_match=string))
-
-        return results
+        return list(filter(lambda element: pre_result.search(str(element)), self.data))
 
     def replace(self):
         """
@@ -168,5 +162,7 @@ class Regex(object):  # pylint: disable=too-few-public-methods
                 self.regex,
                 self.replace_with,  # pylint: disable=no-member
                 self.data,
-                self.occurences)  # pylint: disable=no-member
+                self.occurences,  # pylint: disable=no-member
+            )
+
         return self.data
