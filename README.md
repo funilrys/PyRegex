@@ -4,7 +4,7 @@
 
 ## License
 
-    Copyright (c) 2017 Funilrys - Nissar Chababy <contact at funilrys dot com>
+    Copyright (c) 2017-2022 Funilrys - Nissar Chababy <contact at funilrys dot com>
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
